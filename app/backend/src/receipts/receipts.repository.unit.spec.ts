@@ -27,12 +27,12 @@ describe('SupabaseReceiptsRepository', () => {
   describe('save', () => {
     it('should upsert a receipt', async () => {
       const receipt = { txHash: 'abc', operationIndex: 0 } as NormalizedReceipt;
-      const upsertMock = jest.fn().mockResolved({ error: null });
+      const upsertMock = jest.fn().mockResolvedValue({ error: null });
       mockSupabase.from.mockReturnValue({ upsert: upsertMock });
 
       await repo.save(receipt, 'testnet');
 
-      expect(mockSupabase.from).toHeveBeenCalledWith('receipts');
+      expect(mockSupabase.from).toHaveBeenCalledWith('receipts');
       expect(upsertMock).toHaveBeenCalledWith(
         expect.objectContaining({
           tx_hash: 'abc',
@@ -46,7 +46,7 @@ describe('SupabaseReceiptsRepository', () => {
 
     it('should throw on error', async () => {
       const receipt = { txHash: 'abc', operationIndex: 0 } as NormalizedReceipt;
-      const upsertMock = jest.fn().mockResolved({ error: new Error('DB down') });
+      const upsertMock = jest.fn().mockResolvedValue({ error: new Error('DB down') });
       mockSupabase.from.mockReturnValue({ upsert: upsertMock });
 
       await expect(repo.save(receipt, 'testnet')).rejects.toThrow('DB down');
@@ -56,7 +56,7 @@ describe('SupabaseReceiptsRepository', () => {
   describe('findByTxHash', () => {
     it('should return receipt when found', async () => {
       const receipt = { txHash: 'abc', operationIndex: 0 };
-      const maybeSingleMock = jest.fn().mockResolved({ data: receipt, error: null });
+      const maybeSingleMock = jest.fn().mockResolvedValue({ data: receipt, error: null });
       const queryMock = { eq: jest.fn().mockReturnThis(), maybeSingle: maybeSingleMock };
 
       mockSupabase.from.mockReturnValue(queryMock);
@@ -68,8 +68,8 @@ describe('SupabaseReceiptsRepository', () => {
     });
 
     it('should return null when not found', async () => {
-      const maybeSingleMock = jest.fn().mockResolved({ data: null, error: null });
-      const queryMock = { eq: jest.fn().mockReturnThis(), maybe-Single: maybeSingleMock };
+      const maybeSingleMock = jest.fn().mockResolvedValue({ data: null, error: null });
+      const queryMock = { eq: jest.fn().mockReturnThis(), maybeSingle: maybeSingleMock };
 
       mockSupabase.from.mockReturnValue(queryMock);
 
@@ -78,7 +78,7 @@ describe('SupabaseReceiptsRepository', () => {
     });
 
     it('should throw on error', async () => {
-      const maybeSingleMock = jest.fn().mockResolved({ data: null, error: new Error('DB error') });
+      const maybeSingleMock = jest.fn().mockResolvedValue({ data: null, error: new Error('DB error') });
       const queryMock = { eq: jest.fn().mockReturnThis(), maybeSingle: maybeSingleMock };
 
       mockSupabase.from.mockReturnValue(queryMock);
