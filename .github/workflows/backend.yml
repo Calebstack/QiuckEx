@@ -5,9 +5,8 @@ on:
     branches: [main, develop]
     paths:
       - "app/backend**"
-
-pull_request:
-  branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
     paths:
       - "app/backend**"
 
@@ -25,13 +24,13 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTRESE_USER: ci_test
-          POSTRESE_PASSWORD: ci_test_password
-          POSTRESE_DB: quickex_test
+          POSTGRES_USER: ci_test
+          POSTGRES_PASSWORD: ci_test_password
+          POSTGRES_DB: quickex_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pgisready
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
