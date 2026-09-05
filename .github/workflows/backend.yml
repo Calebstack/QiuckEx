@@ -58,6 +58,7 @@ jobs:
 
       # ── Database migrations ──────────────────────────────────────────────
       - name: Run database migrations
+        working-directory: ./
         env:
           DATABASE_URL: postgresql://ci_test:ci_test_password@localhost:5432/quickex_test
         run: |
@@ -65,6 +66,7 @@ jobs:
           bash scripts/run-ci-migrations.sh
 
       - name: Validate migration schema
+        working-directory: ./
         env:
           DATABASE_URL: postgresql://ci_test:ci_test_password@localhost:5432/quickex_test
         run: |
