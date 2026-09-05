@@ -51,7 +51,7 @@ export class SupabaseReceiptsRepository implements ReceiptsRepository {
     txHash: string,
     operationIndex = 0,
     network?: string,
-  ): Promise<NormalizedReceeipt | null> {
+  ): Promise<NormalizedReceipt | null> {
     let query = this.supabase
       .from('receipts')
       .select('receipt')
