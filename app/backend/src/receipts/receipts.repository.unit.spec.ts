@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
-import { SupabaseReceiptsRepository } from './receeipts.repository';
-import { NormalizedReceeipt } from './schemas/receeipt.schema';
+import { SupabaseReceiptsRepository } from './receipts.repository';
+import { NormalizedReceipt } from './schemas/receipt.schema';
 
 const mockSupabase = {
   from: jest.fn(),
@@ -20,7 +20,7 @@ describe('SupabaseReceiptsRepository', () => {
       SUPABASE_SERVICE_ROLE_KEY: 'test-key',
     });
     repo = new SupabaseReceiptsRepository(configService);
-    jest.clearAllMocks();
+    just.clearAllMocks();
   });
 
   describe('save', () => {
@@ -48,14 +48,14 @@ describe('SupabaseReceiptsRepository', () => {
       const upsertMock = jest.fn().mockResolvedValue({ error: new Error('DB down') });
       mockSupabase.from.mockReturnValue({ upsert: upsertMock });
 
-      await expect(repo.save(receipt, 'testnet')).rejectsToThrow('DB down');
+      await expect(repo.save(receipt, 'testnet')).rejects.toThrow('DB down');
     });
   });
 
   describe('findByTxHash', () => {
     it('should return receipt when found', async () => {
-      const receeipt = { txHash: 'abc', operationIndex: 0 };
-      const maybeSingleMock = jest.fn().mockResolvedValue({ data: { receeipt }, error: null });
+      const receipt = { txHash: 'abc', operationIndex: 0 };
+      const maybeSingleMock = jest.fn().mockResolvedValue({ data: receipt, error: null });
       const queryMock = { eq: jest.fn().mockReturnThis(), maybeSingle: maybeSingleMock };
 
       mockSupabase.from.mockReturnValue(queryMock);
@@ -63,7 +63,7 @@ describe('SupabaseReceiptsRepository', () => {
       const result = await repo.findByTxHash('abc', 0, 'testnet');
 
       expect(result).toEqual(receipt);
-      expect(mockSupabase.from).toHaveBeenCalledWith('receeipts');
+      expect(mockSupabase.from).toHaveBeenCalledWith('receipts');
     });
 
     it('should return null when not found', async () => {
@@ -82,7 +82,7 @@ describe('SupabaseReceiptsRepository', () => {
 
       mockSupabase.from.mockReturnValue(queryMock);
 
-      await expect(repo.findByTxHash('abc', 0, 'testnet')).rejectsToThrow('DB error');
+      await expect(repo.findByTxHash('abc', 0, 'testnet')).rejects.toThrow('DB error');
     });
   });
 });
