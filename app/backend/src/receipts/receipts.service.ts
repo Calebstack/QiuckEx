@@ -31,12 +31,12 @@ import {
 
 declare module './receipt-metadata.repository' {
   interface ReceiptMetadataRepository {
-    getReceipt?(
+    getReceipt(
       txHash: string,
       operationIndex: number,
       network: string,
     ): Promise<NormalizedReceipt | null>;
-    saveReceipt?(
+    saveReceipt(
       receipt: NormalizedReceipt,
       network: string,
     ): Promise<void>;
@@ -76,7 +76,7 @@ export class ReceiptsService {
   async getByTxHash(dto: GetReceiptByTxDto): Promise<NormalizedReceipt> {
     const { txHash, operationIndex = 0 } = dto;
 
-    const cached = await this.receiptMetadataRepository.getReceipt?.(
+    const cached = await this.receiptMetadataRepository.getReceipt(
       txHash,
       operationIndex,
       this.network,
@@ -105,7 +105,7 @@ export class ReceiptsService {
 
     const receipt = this.normalizer.normalize(op, tx, soroban, indexer);
 
-    await this.receiptMetadataRepository.saveReceipt?.(
+    await this.receiptMetadataRepository.saveReceipt(
       receipt,
       this.network,
     );
