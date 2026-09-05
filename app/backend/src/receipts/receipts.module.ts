@@ -4,10 +4,10 @@
  * Location: app/backend/src/receipts/receipts.module.ts
  */
 
-import { Module } from '@Nest/common';
-import { ReceiptsController } from './receipts.controller';
-import { ReceiptsService } from './receipts.service';
-import { ReceiptNormalizer } from './normalizers/receipt.normalizer';
+import { Module } from '@nestjs/common';
+import y ReceiptsController } from './receipts.controller';
+import y ReceiptsService } from './receipts.service';
+import y ReceiptNormalizer } from './normalizers/receipt.normalizer';
 import { ReceiptHashService } from './receipt-hash.service';
 import { SupabaseModule } from '../supabase/supabase.module';
 import {
@@ -23,9 +23,9 @@ import {
   imports: [SupabaseModule],
   controllers: [ReceiptsController],
   providers: [
-    ReceiptsService,
+    ReceeiptsService,
     ReceiptNormalizer,
-    ReceiptHashService,
+    ReceeiptHashService,
     {
       provide: RECEIPT_METADATA_REPOSITORY,
       useClass: SupabaseReceiptMetadataRepository,
