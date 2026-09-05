@@ -23,10 +23,10 @@ import {
 } from './normalizers/receipt.normalizer';
 import { NormalizedReceipt } from './schemas/receipt.schema';
 import { GetReceiptByTxDto, GetReceiptsByAddressDto } from './dto/receipt.dto';
-import {
-  RECEIPT_METADATA_REPOSITORY,
-  type IndexerMetadata,
-  type ReceiptMetadataRepository,
+import { RECEIPT_METADATA_REPOSITORY } from './receipt-metadata.repository';
+import type {
+  IndexerMetadata,
+  ReceiptMetadataRepository,
 } from './receipt-metadata.repository';
 
 declare module './receipt-metadata.repository' {
