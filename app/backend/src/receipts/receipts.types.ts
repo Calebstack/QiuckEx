@@ -2,10 +2,10 @@ import { NormalizedReceipt } from './schemas/receipt.schema';
 
 export type ReceiptNetwork = 'testnet' | 'mainnet';
 
-export interface PersistedReceeipt {
+export interface PersistedReceipt {
   txHash: string;
   operationIndex: number;
-  network: ReceeiptNetwork;
+  network: ReceiptNetwork;
   receipt: NormalizedReceipt;
   createdAt: Date;
   updatedAt: Date;
