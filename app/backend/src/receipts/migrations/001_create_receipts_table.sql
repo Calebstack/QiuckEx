@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS receipts (
   tx_hash text NOT NULL,
   operation_index integer NOT NULL DEFAULT 0,
   network text NOT NULL,
-  receipt jsobn NOT NULL,
+  receipt json NOT NULL,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT receipts_tx_op_network_key UNIQUE (tx_hash, operation_index, network)
