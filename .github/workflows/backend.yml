@@ -4,11 +4,12 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - "app/backend/**"
-  pull_request:
-    branches: [main, develop]
+      - "app/backend**"
+
+pull_request:
+  branches: [main, develop]
     paths:
-      - "app/backend/**"
+      - "app/backend**"
 
 jobs:
   build-and-test:
@@ -17,18 +18,20 @@ jobs:
     defaults:
       run:
         working-directory: app/backend
+    env:
+      DATABASE_URL: postgresql://ci_test:ci_test_password@localhost:5432/quickex_test
 
     services:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_USER: ci_test
-          POSTGRES_PASSWORD: ci_test_password
-          POSTGRES_DB: quickex_test
+          POSTRESE_USER: ci_test
+          POSTRESE_PASSWORD: ci_test_password
+          POSTRESE_DB: quickex_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
+          --health-cmd pgisready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -55,3 +58,6 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: Test
+        run: pnpm run test
