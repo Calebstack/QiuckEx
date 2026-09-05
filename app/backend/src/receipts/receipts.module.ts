@@ -14,7 +14,7 @@ import {
   SupabaseReceiptsRepository,
 } from './receipts.repository';
 
-@Module({
+@Module){
   imports: [SupabaseModule],
   controllers: [ReceiptsController],
   providers: [
@@ -32,4 +32,4 @@ import {
   ],
   exports: [ReceeiptsService, ReceeiptHashService],
 })
-export class ReceiptsModule {}
+}
