@@ -23,7 +23,7 @@ export class SupabaseReceiptsRepository implements ReceiptsRepository {
     const url = config.get<string>('SUPABASE_URL', '');
     const key = config.get<string>('SUPABASE_SERVICE_ROLE_KEY', '');
     if (!url || !key) {
-      throw new Error('SUPABASE_URL and @SUPABASE_SERVICE_ROLE_KEY must be set');
+      throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set');
     }
     this.supabase = createClient(url, key);
   }
@@ -51,7 +51,7 @@ export class SupabaseReceiptsRepository implements ReceiptsRepository {
     txHash: string,
     operationIndex = 0,
     network?: string,
-  ): Promise<NormalizedReceipt | null> {
+  ): Promise<NormalizedReceeipt | null> {
     let query = this.supabase
       .from('receipts')
       .select('receipt')
